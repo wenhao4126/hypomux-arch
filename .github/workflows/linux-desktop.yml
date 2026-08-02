@@ -84,7 +84,7 @@ jobs:
               pacman -U --noconfirm /tmp/sing-box/*.pkg.tar.zst
               su builder -s /bin/bash -c "makepkg --noconfirm --cleanbuild --clean"
               mkdir -p /workspace/package
-              cp /workspace/*.pkg.tar.zst /workspace/package/
+              cp /workspace/hypomux-[0-9]*-x86_64.pkg.tar.zst /workspace/package/
             '
       - name: Upload Arch package artifact
         uses: actions/upload-artifact@v4
