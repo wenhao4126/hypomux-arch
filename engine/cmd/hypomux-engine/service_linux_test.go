@@ -57,7 +57,7 @@ func TestLinuxServiceAcceptsCurrentUserAndRunsProtocol(t *testing.T) {
 	if err != nil {
 		t.Fatalf("stat socket: %v", err)
 	}
-	if info.Mode().Perm()&0077 != 0 {
+	if info.Mode().Perm()&0007 != 0 {
 		t.Fatalf("socket permissions = %o, want no access for other users", info.Mode().Perm())
 	}
 }

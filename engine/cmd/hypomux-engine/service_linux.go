@@ -45,7 +45,7 @@ func listenLinuxService(path string) (*net.UnixListener, error) {
 	if err != nil {
 		return nil, fmt.Errorf("listen Core Unix socket: %w", err)
 	}
-	if err := os.Chmod(path, 0600); err != nil {
+	if err := os.Chmod(path, 0660); err != nil {
 		_ = listener.Close()
 		_ = os.Remove(path)
 		return nil, fmt.Errorf("restrict Core Unix socket: %w", err)

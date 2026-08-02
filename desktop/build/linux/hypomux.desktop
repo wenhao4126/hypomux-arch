@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=HypoMux
+Comment=Multi-interface proxy and TUN network scheduler
+Exec=/usr/bin/hypomux
+Icon=hypomux
+Terminal=false
+Categories=Network;Utility;
+StartupNotify=true

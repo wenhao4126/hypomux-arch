@@ -1,0 +1,2 @@
+d /run/hypomux 0750 root hypomux -
+d /var/lib/hypomux 0750 root hypomux -

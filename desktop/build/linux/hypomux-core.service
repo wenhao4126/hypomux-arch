@@ -1,0 +1,25 @@
+[Unit]
+Description=HypoMux privileged network core
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/hypomux/hypomux-engine service
+Restart=on-failure
+RestartSec=3s
+RuntimeDirectory=hypomux
+RuntimeDirectoryMode=0750
+User=root
+Group=hypomux
+AmbientCapabilities=CAP_NET_ADMIN
+CapabilityBoundingSet=CAP_NET_ADMIN
+NoNewPrivileges=false
+DeviceAllow=/dev/net/tun rw
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/run/hypomux /var/lib/hypomux
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

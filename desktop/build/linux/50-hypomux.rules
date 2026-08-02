@@ -1,0 +1,5 @@
+polkit.addRule(function(action, subject) {
+    if (action.id == "io.hypomux.core.manage" && subject.active == true && subject.local == true) {
+        return polkit.Result.AUTH_ADMIN_KEEP;
+    }
+});
