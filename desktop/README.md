@@ -1,6 +1,6 @@
 # HypoMux Desktop
 
-HypoMux 的 Windows 桌面客户端，使用 Wails v3、React、TypeScript、Vite 与 Fluent UI React v9 构建。
+HypoMux 的桌面客户端，使用 Wails v3、React、TypeScript、Vite 与 Fluent UI React v9 构建。Windows 使用 WebView2；Arch Linux 使用 GTK4/WebKitGTK 6.0。
 
 桌面 WebView2 进程始终以普通用户权限运行。TUN、WFP、路由、DNS 与网络恢复操作由独立的 Go Core 承担；正式安装时 Core 注册为 `HypoMuxCore` Windows Service，开发环境可回退到原生 UAC 按需启动。
 
@@ -64,3 +64,7 @@ wails3 task windows:build
 当前本地运行资源输出到 `bin/`。该目录、前端 `dist/`、生成的 bindings、Task 缓存与打包下载物均由 `.gitignore` 排除。
 
 发布前仍需完成管理员环境下的 Service、TUN/WFP、覆盖升级、卸载恢复、WebView2 缺失以及 100%/125%/150% DPI 实机矩阵。
+
+## Arch Linux 构建
+
+Arch 构建需要 `gtk4`、`webkitgtk-6.0`、`iproute2`、`sing-box`、`systemd` 和 `polkit`。在仓库根目录运行 `makepkg -si`；安装后把当前用户加入 `hypomux` 组，并启用 `hypomux-core.service`。GUI 通过 `/run/hypomux/hypomux-core.sock` 连接核心，TUN 由核心服务使用 `CAP_NET_ADMIN` 管理。

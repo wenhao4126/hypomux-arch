@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/Desktop-Wails%20v3-CB3837?style=flat-square" alt="Wails v3">
   <img src="https://img.shields.io/badge/UI-React%20%2B%20Fluent%20UI-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React and Fluent UI">
   <img src="https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D4?style=flat-square&logo=windows" alt="Windows 10 and 11">
+  <img src="https://img.shields.io/badge/Linux-Arch%20Linux-1793d1?style=flat-square&logo=archlinux&logoColor=white" alt="Arch Linux">
 </p>
 
 HypoMux 是一款面向 Windows 的开源多网卡聚合与分流工具。它把多连接下载任务分配到多张活动网卡，让有线网络、Wi-Fi、手机热点或 USB 网络共享能够同时承担流量。
@@ -53,6 +54,18 @@ HypoMux 不收集、出售或上传个人数据及遥测信息。程序仅会在
 ---
 
 ## 下载
+
+### Arch Linux
+
+Arch Linux 版本提供 Wails GUI、普通系统代理和 Linux TUN 模式。安装运行时依赖后，从仓库根目录构建：
+
+```bash
+makepkg -si
+sudo systemctl enable --now hypomux-core.service
+sudo usermod -aG hypomux "$USER"
+```
+
+重新登录使组权限生效。核心服务使用 `/dev/net/tun`、`CAP_NET_ADMIN` 和 Linux 路由；GUI 以普通用户运行。包不包含 Windows 的 `.exe`、`.dll` 或 NSIS 安装器。
 
 > **Windows 安装包：**[前往 GitHub Releases 下载最新版](https://github.com/Hypostasis-Cat/HypoMux/releases/latest)
 >

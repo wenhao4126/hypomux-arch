@@ -23,6 +23,18 @@ The only non-standard dependency is the version-pinned
 `golang.org/x/sys/windows` package. It is used for Windows process identity
 and IP Helper API access.
 
+On Arch Linux, the engine builds natively and the `service` command is a
+foreground systemd service. It listens on `/run/hypomux/hypomux-core.sock` and
+uses the `hypomux` group for local GUI access. Linux TUN cleanup targets only
+the `HypoMux-Tun` device and its default routes.
+
+```bash
+cd engine
+go test ./...
+go vet ./...
+go build -trimpath -o ../dist/hypomux-engine ./cmd/hypomux-engine
+```
+
 Run the production-compatible one-shot diagnostic:
 
 ```powershell

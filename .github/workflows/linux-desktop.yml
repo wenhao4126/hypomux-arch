@@ -1,0 +1,61 @@
+name: Validate Linux Desktop
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'desktop/**'
+      - 'engine/**'
+      - 'protocol/**'
+      - 'PKGBUILD'
+      - '.github/workflows/linux-desktop.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'desktop/**'
+      - 'engine/**'
+      - 'protocol/**'
+      - 'PKGBUILD'
+      - '.github/workflows/linux-desktop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install GTK/WebKit dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev libayatana-appindicator3-dev
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: engine/go.mod
+          cache-dependency-path: |
+            engine/go.sum
+            desktop/go.sum
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+          run_install: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: desktop/frontend/pnpm-lock.yaml
+      - name: Install Wails v3 CLI
+        run: go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-alpha2.119
+      - name: Generate bindings and frontend
+        run: |
+          pnpm --dir desktop/frontend install --frozen-lockfile
+          (cd desktop && wails3 generate bindings -clean=true -ts -i)
+          pnpm --dir desktop/frontend build
+      - name: Test, vet and build
+        run: |
+          go -C engine test ./...
+          go -C engine vet ./...
+          go -C desktop test ./internal/engineclient ./internal/services ./internal/platform ./internal/startup
+          go -C desktop vet ./internal/engineclient ./internal/services ./internal/platform ./internal/startup
+          go -C engine build -trimpath -o /tmp/hypomux-engine ./cmd/hypomux-engine
+          go -C desktop build -tags production -trimpath -o /tmp/hypomux

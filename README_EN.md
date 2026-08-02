@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/Desktop-Wails%20v3-CB3837?style=flat-square" alt="Wails v3">
   <img src="https://img.shields.io/badge/UI-React%20%2B%20Fluent%20UI-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React and Fluent UI">
   <img src="https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D4?style=flat-square&logo=windows" alt="Windows 10 and 11">
+  <img src="https://img.shields.io/badge/Linux-Arch%20Linux-1793d1?style=flat-square&logo=archlinux&logoColor=white" alt="Arch Linux">
 </p>
 
 HypoMux is an open-source multi-adapter aggregation and split-routing utility for Windows. It distributes multi-connection download workloads across active network adapters, allowing Ethernet, Wi-Fi, mobile hotspots, and USB tethering to carry traffic at the same time.
@@ -53,6 +54,18 @@ HypoMux does not collect, sell, or upload personal data or telemetry. The progra
 ---
 
 ## Download
+
+### Arch Linux
+
+The Arch Linux package provides the Wails GUI, local system-proxy mode, and Linux TUN mode. Build and install it from the repository root:
+
+```bash
+makepkg -si
+sudo systemctl enable --now hypomux-core.service
+sudo usermod -aG hypomux "$USER"
+```
+
+Log in again for the group membership to take effect. The core service uses `/dev/net/tun`, `CAP_NET_ADMIN`, and Linux routes while the GUI stays unprivileged. The package does not contain Windows `.exe`, `.dll`, or NSIS artifacts.
 
 > **Windows installer:** [Download the latest release from GitHub](https://github.com/Hypostasis-Cat/HypoMux/releases/latest)
 >
