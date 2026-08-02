@@ -22,7 +22,7 @@ build() {
   pnpm --dir desktop/frontend build
 
   go -C engine build -trimpath -buildvcs=false -ldflags="-s -w -X main.version=${pkgver}" \
-    -o desktop/hypomux-engine ./cmd/hypomux-engine
+    -o ../desktop/hypomux-engine ./cmd/hypomux-engine
   go -C desktop build -tags production -trimpath -buildvcs=false -ldflags="-s -w" \
     -o hypomux
 }
