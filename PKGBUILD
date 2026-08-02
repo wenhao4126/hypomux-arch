@@ -1,6 +1,6 @@
 # Maintainer: HypoMux contributors
 pkgname=hypomux
-pkgver=2.5.1
+pkgver=2.5.2
 pkgrel=1
 pkgdesc='Multi-interface connection scheduler with proxy and Linux TUN modes'
 arch=('x86_64')
