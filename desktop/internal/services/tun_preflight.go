@@ -64,7 +64,7 @@ func NewTunService(settings *SettingsService, adapters *AdapterService) *TunServ
 		listAdapters:    adapters.List,
 		inspectPlatform: inspectTunPlatform,
 		resolveEngine:   engineclient.ResolveExecutable,
-		resolveSingBox:  func() (string, error) { return resolveRuntimeAsset("sing-box.exe") },
+		resolveSingBox:  func() (string, error) { return resolveRuntimeAsset(singBoxExecutableName()) },
 		now:             time.Now,
 		latest: TunPreflightSnapshot{
 			CheckedAt: time.Time{}, SharedGatewayRisks: []string{}, Issues: []TunPreflightIssue{},

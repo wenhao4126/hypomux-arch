@@ -7,7 +7,9 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -368,6 +370,13 @@ func (s *coreSession) closeTransport() error {
 }
 
 func ResolveExecutable() (string, error) {
+	if runtime.GOOS == "linux" {
+		if installed, err := exec.LookPath("hypomux-engine"); err == nil {
+			if absolute, absoluteErr := filepath.Abs(installed); absoluteErr == nil {
+				return absolute, nil
+			}
+		}
+	}
 	candidates := make([]string, 0, 16)
 	if configured := os.Getenv("HYPOMUX_ENGINE_PATH"); configured != "" {
 		candidates = append(candidates, os.ExpandEnv(configured))
@@ -408,5 +417,5 @@ func ResolveExecutable() (string, error) {
 			return absolute, nil
 		}
 	}
-	return "", errors.New("未找到 hypomux-engine.exe；可设置 HYPOMUX_ENGINE_PATH")
+	return "", errors.New("未找到 hypomux-engine；可设置 HYPOMUX_ENGINE_PATH")
 }

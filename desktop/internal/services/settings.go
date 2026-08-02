@@ -385,6 +385,9 @@ func (s *SettingsService) inspectLegacyConfig() {
 }
 
 func legacyConfigPath() (string, error) {
+	if configured := os.Getenv("USERPROFILE"); configured != "" {
+		return filepath.Join(configured, ".hypomux", "config.json"), nil
+	}
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return "", err

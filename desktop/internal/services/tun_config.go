@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -53,7 +55,7 @@ func writeSingBoxConfig(
 	if err != nil {
 		return "", "", clashAPIConfig{}, err
 	}
-	singBox, err := resolveRuntimeAsset("sing-box.exe")
+	singBox, err := resolveRuntimeAsset(singBoxExecutableName())
 	if err != nil {
 		return "", "", clashAPIConfig{}, err
 	}
@@ -264,6 +266,13 @@ func splitEndpoint(value string, defaultPort int) (string, int, error) {
 }
 
 func resolveRuntimeAsset(name string) (string, error) {
+	if runtime.GOOS == "linux" {
+		if installed, err := exec.LookPath(name); err == nil {
+			if absolute, absoluteErr := filepath.Abs(installed); absoluteErr == nil {
+				return absolute, nil
+			}
+		}
+	}
 	candidates := []string{}
 	if executable, err := os.Executable(); err == nil {
 		root := filepath.Dir(executable)
