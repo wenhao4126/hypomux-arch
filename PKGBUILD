@@ -8,7 +8,7 @@ url='https://github.com/Hypostasis-Cat/HypoMux'
 license=('MIT')
 depends=('gtk4' 'webkitgtk-6.0' 'sing-box' 'iproute2' 'polkit' 'systemd')
 makedepends=('git' 'go' 'nodejs' 'pnpm')
-source=("git+${url}.git#tag=v${pkgver}")
+source=("git+${url}.git#branch=main")
 sha256sums=('SKIP')
 
 build() {
