@@ -75,7 +75,7 @@ type Hello struct {
 }
 
 func New() *Client {
-	return newClient(stdioLauncher{}, newPrivilegedLauncher())
+	return newClient(newDefaultNormalLauncher(), newPrivilegedLauncher())
 }
 
 func newClient(normal, elevated coreLauncher) *Client {

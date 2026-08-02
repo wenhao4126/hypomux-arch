@@ -1,4 +1,4 @@
-//go:build !windows && !linux
+//go:build linux
 
 package main
 
@@ -9,5 +9,5 @@ import (
 )
 
 func connectAuthenticatedPipe(context.Context, string, string, int) (io.ReadWriteCloser, error) {
-	return nil, errors.New("authenticated named-pipe transport is only available on Windows")
+	return nil, errors.New("Linux 使用 systemd 核心 Unix socket，不支持 serve-pipe 一次性 transport")
 }
