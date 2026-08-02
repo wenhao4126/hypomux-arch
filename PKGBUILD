@@ -12,7 +12,7 @@ source=("git+${url}.git#branch=main")
 sha256sums=('SKIP')
 
 build() {
-  cd "${srcdir}/HypoMux"
+  cd "${srcdir}/hypomux-arch"
 
   mkdir -p "${srcdir}/bin"
   GOBIN="${srcdir}/bin" go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-alpha2.119
@@ -28,13 +28,13 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/HypoMux"
+  cd "${srcdir}/hypomux-arch"
   go -C engine test ./...
   go -C desktop test ./internal/engineclient ./internal/services ./internal/platform ./internal/startup
 }
 
 package() {
-  cd "${srcdir}/HypoMux"
+  cd "${srcdir}/hypomux-arch"
 
   install -Dm755 desktop/hypomux "${pkgdir}/usr/lib/hypomux/hypomux"
   install -Dm755 desktop/hypomux-engine "${pkgdir}/usr/lib/hypomux/hypomux-engine"
